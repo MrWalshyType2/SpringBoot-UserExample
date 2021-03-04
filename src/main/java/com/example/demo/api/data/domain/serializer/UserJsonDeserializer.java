@@ -7,11 +7,13 @@ import org.springframework.boot.jackson.JsonComponent;
 
 import com.example.demo.api.data.domain.AccountType;
 import com.example.demo.api.data.domain.User;
+import com.example.demo.api.data.domain.UserLogin;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 
 @JsonComponent
@@ -25,10 +27,10 @@ public class UserJsonDeserializer extends JsonDeserializer<User> {
 		TextNode id = (TextNode) tree.get("id");
 		TextNode forename = (TextNode) tree.get("forename");
 		TextNode surname = (TextNode) tree.get("surname");
-		TextNode username = (TextNode) tree.get("email");
-		TextNode password = (TextNode) tree.get("password");
 		TextNode email = (TextNode) tree.get("email");
 		TextNode accountType = (TextNode) tree.get("accountType");
+		
+		ObjectNode userLogin = (ObjectNode) tree.get("userLogin");
 
 		User user;
 		
@@ -36,20 +38,20 @@ public class UserJsonDeserializer extends JsonDeserializer<User> {
 			user = User.builder()
 					.forename(forename.asText())
 					.surname(surname.asText())
-					.username(username.asText())
-					.password(password.asText())
 					.email(email.asText())
 					.accountType(AccountType.valueOf(accountType.asText()))
+					.userLogin(new UserLogin(userLogin.get("username").asText(),
+											 userLogin.get("password").asText()))
 					.build();
 		} else {
 			user = User.builder()
 					.id(UUID.fromString(id.asText()))
 					.forename(forename.asText())
 					.surname(surname.asText())
-					.username(username.asText())
-					.password(password.asText())
 					.email(email.asText())
 					.accountType(AccountType.valueOf(accountType.asText()))
+					.userLogin(new UserLogin(userLogin.get("username").asText(),
+							 				 userLogin.get("password").asText()))
 					.build();
 		}
 		return user;

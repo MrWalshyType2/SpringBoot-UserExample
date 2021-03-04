@@ -2,10 +2,13 @@ package com.example.demo.api.data.domain;
 
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,21 +28,21 @@ public class User {
 	private String forename;
 	private String surname;
 	
-	private String username;
-	private String password;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "fkUserLoginId")
+	private UserLogin userLogin;
+
 	private String email;
 	
 	private AccountType accountType;
 	
-	public User(String forename, String surname, String username, String password, String email,
-			AccountType accountType) {
+	public User(String forename, String surname, String email, AccountType accountType, UserLogin userLogin) {
 		super();
 		this.forename = forename;
 		this.surname = surname;
-		this.username = username;
-		this.password = password;
 		this.email = email;
 		this.accountType = accountType;
+		this.userLogin = userLogin;
 	}
 
 	public String getForename() {
@@ -58,22 +61,6 @@ public class User {
 		this.surname = surname;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -90,16 +77,20 @@ public class User {
 		this.accountType = accountType;
 	}
 
-
-
 	public UUID getId() {
 		return id;
 	}
 
-
-
 	public void setId(UUID id) {
 		this.id = id;
+	}
+
+	public UserLogin getUserLogin() {
+		return userLogin;
+	}
+
+	public void setUserLogin(UserLogin userLogin) {
+		this.userLogin = userLogin;
 	}
 
 }

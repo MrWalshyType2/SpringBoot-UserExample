@@ -18,10 +18,10 @@ public class UserDTO {
 	private String forename;
 	private String surname;
 	
-	private String username;
 	private String email;
 	
 	private AccountType accountType;
+	private UserLoginDTO userLogin;
 
 	public String getForename() {
 		return forename;
@@ -37,14 +37,6 @@ public class UserDTO {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public String getEmail() {
@@ -69,6 +61,14 @@ public class UserDTO {
 
 	public void setId(UUID id) {
 		this.id = id;
+	}
+
+	public UserLoginDTO getUserLogin() {
+		return userLogin;
+	}
+
+	public void setUserLogin(UserLoginDTO userLogin) {
+		this.userLogin = userLogin;
 	}
 	
 }

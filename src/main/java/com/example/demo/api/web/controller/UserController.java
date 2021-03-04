@@ -1,6 +1,5 @@
 package com.example.demo.api.web.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.api.data.domain.AccountType;
 import com.example.demo.api.data.domain.User;
-import com.example.demo.api.data.domain.mapper.UserMapper;
 import com.example.demo.api.web.domain.UserDTO;
 import com.example.demo.api.web.domain.UserLoginDTO;
 import com.example.demo.api.web.exception.UserNotFoundException;
@@ -51,8 +48,8 @@ public class UserController {
 		return userService.createUser(user);
 	}
 	
-	@PutMapping
-	public UserDTO updateUser(@PathParam("id") UUID id, @RequestBody User user) throws UserNotFoundException {
+	@PutMapping("/{id}")
+	public UserDTO updateUser(@PathVariable("id") UUID id, @RequestBody User user) throws UserNotFoundException {
 		return userService.updateUser(id, user);
 	}
 	

@@ -60,9 +60,10 @@ public class UserService {
 		User userInDb = oldUser.get();
 		userInDb.setForename(user.getForename());
 		userInDb.setSurname(user.getSurname());
-		userInDb.setUsername(user.getUsername());
-		userInDb.setPassword(user.getPassword());
+		userInDb.getUserLogin();
 		userInDb.setEmail(user.getEmail());
+		userInDb.getUserLogin().setUsername(user.getUserLogin().getUsername());
+		userInDb.getUserLogin().setPassword(user.getUserLogin().getPassword());
 		
 		User updated = userRepository.save(userInDb);
 		
@@ -77,8 +78,7 @@ public class UserService {
 		}
 		
 		User userInDb = oldUser.get();
-		userInDb.setUsername(userLoginDTO.getUsername());
-		userInDb.setPassword(userLoginDTO.getPassword());
+		userInDb.setUserLogin(userMapper.mapToUserLogin(userLoginDTO));
 		
 		User updated = userRepository.save(userInDb);
 		
