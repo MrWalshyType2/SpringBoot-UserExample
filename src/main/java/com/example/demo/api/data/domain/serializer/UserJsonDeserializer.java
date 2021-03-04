@@ -16,11 +16,15 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 
+// This is used if @JsonComponent is present, not necessary as Jackson
+// is capable of Serializing and Deserializing simple data types
 @JsonComponent
 public class UserJsonDeserializer extends JsonDeserializer<User> {
 
 	@Override
 	public User deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+		System.out.println("IN DESERIALIZER");
+		
 		TreeNode tree = p.getCodec()
 						 .readTree(p);
 		

@@ -9,6 +9,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
+// Not necessary as it isn't actually used, but interesting to see how it actually works
 @JsonComponent
 public class UserJsonSerializer extends JsonSerializer<User> {
 

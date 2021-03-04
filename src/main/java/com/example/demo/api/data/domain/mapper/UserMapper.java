@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 
 import com.example.demo.api.data.domain.User;
 import com.example.demo.api.data.domain.UserLogin;
-import com.example.demo.api.web.domain.UserDTO;
-import com.example.demo.api.web.domain.UserLoginDTO;
+import com.example.demo.api.web.domainDTO.UserDTO;
+import com.example.demo.api.web.domainDTO.UserLoginDTO;
 
 @Component
 public class UserMapper {

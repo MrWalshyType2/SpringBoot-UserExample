@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class UserExceptionController extends ResponseEntityExceptionHandler {
+public class UserExceptionControllerAdvice extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(value = UserNotFoundException.class)
 	public ResponseEntity<String> userNotFoundException() {

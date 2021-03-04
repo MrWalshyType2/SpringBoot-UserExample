@@ -1,4 +1,4 @@
-package com.example.demo.api.web.domain;
+package com.example.demo.api.web.domainDTO;
 
 import java.util.UUID;
 
