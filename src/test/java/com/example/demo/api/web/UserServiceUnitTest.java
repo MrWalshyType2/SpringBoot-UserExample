@@ -134,4 +134,26 @@ public class UserServiceUnitTest {
 		verify(userRepository, times(1)).save(valid);
 				
 	}
+	
+	@Test
+	public void updateUserLoginDetailsTest() throws UserNotFoundException {
+		UserLoginDTO updatedLogin = new UserLoginDTO("bobbyo", "password123");
+		
+		User userWithUpdatedLogin = new User(valid.getId(), "Fred", "Herbet", 
+											 "bob.herbet@email.com",
+											 AccountType.USER,
+											 userMapper.mapToUserLogin(updatedLogin));
+		
+		when(userRepository.findById(Mockito.any(UUID.class))).thenReturn(Optional.of(valid));
+		when(userRepository.save(Mockito.any(User.class))).thenReturn(userWithUpdatedLogin);
+		
+		UserDTO updatedUser = userService.updateUserLoginDetails(valid.getId(), updatedLogin);
+	
+		assertEquals(updatedUser.getUserLogin().getPassword(),
+				     updatedLogin.getPassword());
+		
+		verify(userRepository, times(1)).findById(valid.getId());
+		verify(userRepository, times(1)).save(valid);
+				
+	}
 }
