@@ -93,6 +93,6 @@ public class UserService {
 		}
 		userRepository.deleteById(id);
 		
-		return userRepository.existsById(id);
+		return !userRepository.existsById(id);
 	}
 }

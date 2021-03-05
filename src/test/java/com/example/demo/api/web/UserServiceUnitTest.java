@@ -153,7 +153,19 @@ public class UserServiceUnitTest {
 				     updatedLogin.getPassword());
 		
 		verify(userRepository, times(1)).findById(valid.getId());
-		verify(userRepository, times(1)).save(valid);
-				
+		verify(userRepository, times(1)).save(valid);	
+	}
+	
+	@Test
+	public void deleteUserByIdTest() throws UserNotFoundException {
+		when(userRepository.findById(Mockito.any(UUID.class))).thenReturn(Optional.of(valid));
+		when(userRepository.existsById(Mockito.any(UUID.class))).thenReturn(false);
+		
+		boolean success = userService.deleteUserById(valid.getId());
+		
+		assertEquals(true, success);
+		
+		verify(userRepository, times(1)).findById(valid.getId());
+		verify(userRepository, times(1)).existsById(valid.getId());
 	}
 }
