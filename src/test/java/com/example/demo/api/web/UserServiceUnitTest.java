@@ -97,4 +97,14 @@ public class UserServiceUnitTest {
 		assertEquals(validDTO, userDTO);
 		verify(userRepository, times(1)).findById(valid.getId());
 	}
+	
+	@Test
+	public void createUserTest() {
+		when(userRepository.save(valid)).thenReturn(valid);
+		
+		UserDTO createdUser = userService.createUser(valid);
+		
+		assertEquals(validDTO, createdUser);
+		verify(userRepository, times(1)).save(valid);
+	}
 }
