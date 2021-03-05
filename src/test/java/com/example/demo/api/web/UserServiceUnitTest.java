@@ -29,6 +29,7 @@ import com.example.demo.api.web.domainDTO.UserLoginDTO;
 import com.example.demo.api.web.exception.UserNotFoundException;
 import com.example.demo.api.web.service.UserService;
 
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.*;
 
 //@TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -132,7 +133,18 @@ public class UserServiceUnitTest {
 		assertEquals(updatedUserDTO.getForename(), updatedUser.getForename());
 		verify(userRepository, times(1)).findById(valid.getId());
 		verify(userRepository, times(1)).save(valid);
-				
+	}
+	
+	@Test
+	public void updateUserUserNotFoundTest() throws UserNotFoundException {
+		when(userRepository.findById(Mockito.any(UUID.class))).thenReturn(Optional.empty());
+		
+		UserNotFoundException e = assertThrows(UserNotFoundException.class, () -> {
+			userService.updateUser(valid.getId(), valid);
+		});
+		
+		assertEquals("User not found", e.getMessage());
+		verify(userRepository, times(1)).findById(valid.getId());
 	}
 	
 	@Test
