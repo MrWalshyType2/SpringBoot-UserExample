@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode
+//@EqualsAndHashCode
 public class UserDTO {
 
 	private UUID id;
@@ -72,5 +72,57 @@ public class UserDTO {
 	public void setUserLogin(UserLoginDTO userLogin) {
 		this.userLogin = userLogin;
 	}
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((accountType == null) ? 0 : accountType.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((forename == null) ? 0 : forename.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
+		result = prime * result + ((userLogin == null) ? 0 : userLogin.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserDTO other = (UserDTO) obj;
+		if (accountType != other.accountType)
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (forename == null) {
+			if (other.forename != null)
+				return false;
+		} else if (!forename.equals(other.forename))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (surname == null) {
+			if (other.surname != null)
+				return false;
+		} else if (!surname.equals(other.surname))
+			return false;
+		if (userLogin == null) {
+			if (other.userLogin != null)
+				return false;
+		} else if (!userLogin.equals(other.userLogin))
+			return false;
+		return true;
+	}
+
 }

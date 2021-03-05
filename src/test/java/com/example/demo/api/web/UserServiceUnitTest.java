@@ -9,8 +9,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -27,7 +31,7 @@ import com.example.demo.api.web.service.UserService;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest
 public class UserServiceUnitTest {
 
@@ -51,7 +55,10 @@ public class UserServiceUnitTest {
 	private UserDTO validDTO3;
 	private List<UserDTO> validUserDTOs;
 	
-	@BeforeAll
+	@Captor
+	private ArgumentCaptor<User> capturedUser;
+	
+	@BeforeEach
 	public void init() {
 		valid = new User(UUID.randomUUID(), "Bob", "Herbet", 
 				 "bob.herbet@email.com",
@@ -106,5 +113,25 @@ public class UserServiceUnitTest {
 		
 		assertEquals(validDTO, createdUser);
 		verify(userRepository, times(1)).save(valid);
+	}
+	
+	@Test
+	public void updateUserTest() throws UserNotFoundException {
+		User userWithUpdatedForename = new User(valid.getId(), "Fred", "Herbet", 
+												"bob.herbet@email.com",
+												AccountType.USER,
+												new UserLogin("bobbyo", "password"));
+		
+		UserDTO updatedUserDTO = userMapper.mapToDTO(userWithUpdatedForename);
+		
+		when(userRepository.findById(Mockito.any(UUID.class))).thenReturn(Optional.of(valid));
+		when(userRepository.save(Mockito.any(User.class))).thenReturn(userWithUpdatedForename);
+		
+		UserDTO updatedUser = userService.updateUser(valid.getId(), valid);
+	
+		assertEquals(updatedUserDTO.getForename(), updatedUser.getForename());
+		verify(userRepository, times(1)).findById(valid.getId());
+		verify(userRepository, times(1)).save(valid);
+				
 	}
 }
