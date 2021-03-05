@@ -1,10 +1,12 @@
 package com.example.demo.api.web.domainDTO;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class UserLoginDTO {
 
 	private String username;

@@ -12,12 +12,14 @@ import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Builder
+@EqualsAndHashCode
 public class User {
 	
 	@Id
@@ -28,13 +30,13 @@ public class User {
 	private String forename;
 	private String surname;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "fkUserLoginId")
-	private UserLogin userLogin;
-
 	private String email;
 	
 	private AccountType accountType;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "fkUserLoginId")
+	private UserLogin userLogin;
 	
 	public User(String forename, String surname, String email, AccountType accountType, UserLogin userLogin) {
 		super();
