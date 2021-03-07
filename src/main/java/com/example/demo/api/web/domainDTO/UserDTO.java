@@ -3,6 +3,7 @@ package com.example.demo.api.web.domainDTO;
 import java.util.UUID;
 
 import com.example.demo.api.data.domain.AccountType;
+import com.example.demo.api.data.domain.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -123,6 +124,17 @@ public class UserDTO {
 		} else if (!userLogin.equals(other.userLogin))
 			return false;
 		return true;
+	}
+
+	public UserDTO(User valid) {
+		this.id = valid.getId();
+		this.forename = valid.getForename();
+		this.surname = valid.getSurname();
+		this.email = valid.getEmail();
+		this.accountType = valid.getAccountType();
+		this.userLogin = new UserLoginDTO(valid.getUserLogin().getUsername(),
+										  valid.getUserLogin().getPassword());
+		
 	}
 
 }

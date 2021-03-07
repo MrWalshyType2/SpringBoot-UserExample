@@ -2,6 +2,7 @@ package com.example.demo.api.data.domain;
 
 import java.util.UUID;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,6 +19,7 @@ public class UserLogin {
 
 	@Id
 	@GeneratedValue(generator = "UUID")
+	@Column(length = 255, columnDefinition = "varchar(255)", updatable = false, nullable = false, unique = true)
 	private UUID id;
 
 	private String username;

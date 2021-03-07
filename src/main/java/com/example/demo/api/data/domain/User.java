@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.Type;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -17,14 +19,14 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity(name = "users")
 @Builder
 @EqualsAndHashCode
 public class User {
 	
 	@Id
 	@GeneratedValue(generator = "UUID")
-	@Column(length = 36, columnDefinition = "varchar(36)", updatable = false, nullable = false, unique = true)
+	@Column(length = 255, columnDefinition = "varchar(255)", updatable = false, nullable = false, unique = true)
 	private UUID id;
 	
 	private String forename;
@@ -34,6 +36,7 @@ public class User {
 	
 	private AccountType accountType;
 	
+	@Type(type = "VARCHAR(255)")
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fkUserLoginId")
 	private UserLogin userLogin;
